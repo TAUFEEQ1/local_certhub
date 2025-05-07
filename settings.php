@@ -3,6 +3,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 use local_certhub\admin_setting_encrypted;
+use local_certhub\admin_setting_tokenhash;
 
 if ($hassiteconfig) {
     $settings = new admin_settingpage('local_certhub', get_string('pluginname', 'local_certhub'));
@@ -30,10 +31,10 @@ if ($hassiteconfig) {
         ''
     ));
 
-    $settings->add(new admin_setting_encrypted(
-        'local_certhub/accesstoken',
-        get_string('accesstoken', 'local_certhub'),
-        get_string('accesstoken_desc', 'local_certhub'),
+    $settings->add(new admin_setting_tokenhash(
+        'local_certhub/tokenhash',
+        get_string('tokenhash', 'local_certhub'),
+        get_string('tokenhash_desc', 'local_certhub'),
         ''
     ));
 
