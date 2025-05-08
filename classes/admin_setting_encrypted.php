@@ -1,5 +1,6 @@
 <?php
 namespace local_certhub;
+use local_certhub\SecureConfig;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -11,7 +12,7 @@ class admin_setting_encrypted extends \admin_setting_configtext {
         if (empty($data)) {
             return parent::write_setting('');
         }
-        $encrypted = Secureconfig::encrypt($data);
+        $encrypted = SecureConfig::encrypt($data);
         return parent::write_setting($encrypted);
     }
 
@@ -20,6 +21,6 @@ class admin_setting_encrypted extends \admin_setting_configtext {
         if (empty($raw)) {
             return '';
         }
-        return Secureconfig::decrypt($raw);
+        return SecureConfig::decrypt($raw);
     }
 }

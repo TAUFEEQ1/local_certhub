@@ -5,7 +5,7 @@ namespace local_certhub;
 defined('MOODLE_INTERNAL') || die();
 
 
-class Secureconfig {
+class SecureConfig {
     const CIPHER = 'aes-256-cbc';
 
     private static function getKey() {
