@@ -11,10 +11,6 @@ $app = AppFactory::create();
 // Set the base path for Slim
 $app->setBasePath('/local/certhub/index.php');
 
-
-
-$app->addErrorMiddleware(true, true, true);
-
 // Add middleware
 (require __DIR__ . '/middleware/AuthMiddleware.php')($app);
 

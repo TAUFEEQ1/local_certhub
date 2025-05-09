@@ -12,16 +12,7 @@ return function (App $app) {
     $beforeMiddleware = function (Request $request,RequestHandlerInterface $handler) use ($res) {
         global $CFG;
         // Retrieve settings
-        $baseurl = get_config('local_certhub', 'baseurl');
         $tokenhash = get_config('local_certhub', 'tokenhash');
-
-        // grab the hostname from the request
-        $host = $request->getUri()->getHost();
-        // Check if the host matches the baseurl
-        if ($host !== parse_url($baseurl, PHP_URL_HOST)) {
-            $res->getBody()->write(json_encode(['error' => 'Invalid host']));
-            return $res->withStatus(403)->withHeader('Content-Type', 'application/json');
-        }
 
         // Retrieve the Authorization header
         $headers = $request->getHeaders();
