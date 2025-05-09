@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 
 return function (App $app) {
-    $app->add(function (Request $request, RequestHandlerInterface $handler): Response {
+    $app->add(function (Request $request, Response $res, RequestHandlerInterface $handler): Response {
         global $CFG;
         // Retrieve settings
         $baseurl = get_config('local_certhub', 'baseurl');
@@ -16,7 +16,6 @@ return function (App $app) {
         $host = $request->getUri()->getHost();
         // Check if the host matches the baseurl
         if ($host !== parse_url($baseurl, PHP_URL_HOST)) {
-            $res = new Response();
             $res->getBody()->write(json_encode(['error' => 'Invalid host']));
             return $res->withStatus(403)->withHeader('Content-Type', 'application/json');
         }
@@ -27,7 +26,6 @@ return function (App $app) {
         $token = str_replace('Bearer ', '', $auth);
 
         if (!password_verify($token, $tokenhash)) {
-            $res = new Response();
             $res->getBody()->write(json_encode(['error' => 'Unauthorized']));
             return $res->withStatus(401)->withHeader('Content-Type', 'application/json');
         }
