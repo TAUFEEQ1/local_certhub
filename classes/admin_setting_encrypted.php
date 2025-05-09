@@ -23,4 +23,19 @@ class admin_setting_encrypted extends \admin_setting_configtext {
         }
         return SecureConfig::decrypt($raw);
     }
+    public function output_html($data, $query = '') {
+        global $OUTPUT;
+
+        $elementname = $this->get_full_name();
+        $id = \html_writer::random_id($elementname);
+        $input = \html_writer::empty_tag('input', [
+            'type' => 'password',
+            'name' => $elementname,
+            'id' => $id,
+            'value' => '',
+            'class' => 'form-control'
+        ]);
+
+        return format_admin_setting($this, $this->visiblename, $input, $this->description, true, '', '', $query);
+    }
 }
