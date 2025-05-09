@@ -6,7 +6,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 
 return function (App $app) {
-    $app->add(function (Request $request, Response $res, RequestHandlerInterface $handler): Response {
+    // Middleware to authenticate requests
+    $res = $app->getResponseFactory()->createResponse();
+
+    $beforeMiddleware = function (Request $request,RequestHandlerInterface $handler) use ($res) {
         global $CFG;
         // Retrieve settings
         $baseurl = get_config('local_certhub', 'baseurl');
@@ -31,5 +34,6 @@ return function (App $app) {
         }
 
         return $handler->handle($request);
-    });
+    };
+    $app->add($beforeMiddleware);
 };
